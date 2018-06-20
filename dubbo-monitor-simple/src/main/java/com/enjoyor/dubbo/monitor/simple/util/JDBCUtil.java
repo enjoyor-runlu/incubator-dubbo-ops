@@ -27,7 +27,7 @@ public final class JDBCUtil {
 	public static final String password;
 
 	static {
-		// ¶ÁÈ¡×ÊÔ´ÎÄ¼ş
+		// è¯»å–èµ„æºæ–‡ä»¶
 		Properties proobj = PropertiesUtil.loadProperties("conf/env.properties");
 		drvierName = (String) proobj.get("db.driverName");
 		url = (String) proobj.get("db.url");
@@ -36,14 +36,14 @@ public final class JDBCUtil {
 	}
 
 	public static void executeUpdate(String sql) {
-		// ¼ÓÔØÊı¾İ¿âÇı¶¯
+		// åŠ è½½æ•°æ®åº“é©±åŠ¨
 		try {
-			Class.forName(drvierName);// JDBCÍ¨ÓÃ½Ó¿ÚºÍOracleÊı¾İ¿âÇı¶¯°ü¹ØÁª
+			Class.forName(drvierName);// JDBCé€šç”¨æ¥å£å’ŒOracleæ•°æ®åº“é©±åŠ¨åŒ…å…³è”
 		} catch (ClassNotFoundException e) {
 			logger.error(e.getMessage(), e);
 		}
 
-		// ´´½¨Êı¾İ¿âÁ¬½Ó
+		// åˆ›å»ºæ•°æ®åº“è¿æ¥
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(url, userName, password);
@@ -52,13 +52,13 @@ public final class JDBCUtil {
 		}
 
 		try {
-			Statement stmt = conn.createStatement();// ·µ»ØµÄÊÇÒ»¸öÊı¾İ¿â²Ù×÷¶ÔÏó£¨ÍøÂçÍ¨ĞÅµÄÊäÈëÊä³öÁ÷£©
-			stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â²Ù×÷
+			Statement stmt = conn.createStatement();// è¿”å›çš„æ˜¯ä¸€ä¸ªæ•°æ®åº“æ“ä½œå¯¹è±¡ï¼ˆç½‘ç»œé€šä¿¡çš„è¾“å…¥è¾“å‡ºæµï¼‰
+			stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ“ä½œ
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 		}
 
-		// ¹Ø±ÕÁ¬½Ó
+		// å…³é—­è¿æ¥
 		try {
 			conn.close();
 		} catch (SQLException e) {

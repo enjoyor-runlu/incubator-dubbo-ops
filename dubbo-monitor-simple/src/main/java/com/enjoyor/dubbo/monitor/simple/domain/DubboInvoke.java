@@ -14,27 +14,27 @@ public class DubboInvoke implements Serializable {
 	private Long dubboInvokeId;
 
 	/**
-	 * Ìá¹©Õß
+	 * æä¾›è€…
 	 */
 	private String provider;
 
 	/**
-	 * Ïû·ÑÕß
+	 * æ¶ˆè´¹è€…
 	 */
 	private String consumer;
 
 	/**
-	 * ·şÎñ½Ó¿ÚÃû
+	 * æœåŠ¡æ¥å£
 	 */
 	private String service;
 
 	/**
-	 * ·½·¨Ãû
+	 * æ–¹æ³•å
 	 */
 	private String method;
 
 	/**
-	 * ÀàĞÍ
+	 * ç±»å‹
 	 */
 	private String type;
 
