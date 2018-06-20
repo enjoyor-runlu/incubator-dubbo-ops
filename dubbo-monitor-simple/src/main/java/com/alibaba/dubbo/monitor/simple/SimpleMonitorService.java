@@ -259,7 +259,7 @@ public class SimpleMonitorService implements MonitorService {
 	}
 
 	/**
-	 * Dubbo调用信息数据写入DB
+	 * Dubbo璋冪敤淇℃伅鏁版嵁鍐欏叆DB
 	 * 
 	 * @throws Exception
 	 */
