@@ -67,10 +67,9 @@ limitations under the License.
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
         
-        <!-- mysql -->
-        <dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
 		</dependency>
     </dependencies>
     <build>
