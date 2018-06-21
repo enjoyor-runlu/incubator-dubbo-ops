@@ -38,6 +38,8 @@ public final class JdbcUtil {
 			return JdbcUtils.executeUpdate(dataSource, sql, parameters);
 		} catch (SQLException e) {
 			logger.error(e);
+		} catch (Exception e) {
+			logger.error(e);
 		}
 
 		return 0;
