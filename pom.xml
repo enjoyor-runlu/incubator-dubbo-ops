@@ -31,7 +31,7 @@
         <easymock_version>3.4</easymock_version>
         <jmockit_version>1.33</jmockit_version>
         
-        <druid.version>1.1.9</druid.version>
+        <druid.version>1.1.10</druid.version>
     </properties>
 
     <modules>
