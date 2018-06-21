@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -322,34 +323,24 @@ public class SimpleMonitorService implements MonitorService {
 			// 写入数据库
 			String sql =
 				"INSERT INTO dubbo_tb_inoke (PROVIDER, CONSUMER, SERVICE, METHOD, TYPE, INVOKE_DATE, INVOKE_TIME, SUCCESS, FAILURE, ELAPSED, CONCURRENT, MAX_ELAPSED, MAX_CONCURRENT, STATE, CREATE_DATE,  CREATE_USER, MODIFY_DATE, MODIFY_USER)"
-					+ "VALUES ("
-					+ dubboInvoke.getProvider()
-					+ ","
-					+ dubboInvoke.getConsumer()
-					+ ","
-					+ dubboInvoke.getService()
-					+ ","
-					+ dubboInvoke.getMethod()
-					+ ","
-					+ dubboInvoke.getType()
-					+ ","
-					+ dubboInvoke.getInvokeDate()
-					+ ","
-					+ dubboInvoke.getInvokeTime()
-					+ ","
-					+ dubboInvoke.getSuccess()
-					+ ","
-					+ dubboInvoke.getFailure()
-					+ ","
-					+ dubboInvoke.getElapsed()
-					+ ","
-					+ dubboInvoke.getConcurrent()
-					+ ","
-					+ dubboInvoke.getMaxElapsed()
-					+ ","
-					+ dubboInvoke.getMaxConcurrent()
-					+ ",'U', NOW(), 'sys', NOW(), 'sys')";
-			JdbcUtil.executeUpdate(sql);
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, U, NOW(), sys, NOW(), sys)";
+
+			List<Object> list = new ArrayList<Object>();
+			list.add(dubboInvoke.getProvider());
+			list.add(dubboInvoke.getConsumer());
+			list.add(dubboInvoke.getService());
+			list.add(dubboInvoke.getMethod());
+			list.add(dubboInvoke.getType());
+			list.add(dubboInvoke.getInvokeDate());
+			list.add(dubboInvoke.getInvokeTime());
+			list.add(dubboInvoke.getSuccess());
+			list.add(dubboInvoke.getFailure());
+			list.add(dubboInvoke.getElapsed());
+			list.add(dubboInvoke.getConcurrent());
+			list.add(dubboInvoke.getMaxElapsed());
+			list.add(dubboInvoke.getMaxConcurrent());
+
+			JdbcUtil.executeUpdate(sql, list);
 
 			// 写入文件
 			String day = new SimpleDateFormat("yyyyMMdd").format(now);
