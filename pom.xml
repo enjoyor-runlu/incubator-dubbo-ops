@@ -31,6 +31,7 @@
         <easymock_version>3.4</easymock_version>
         <jmockit_version>1.33</jmockit_version>
         
+        <mysql.version>5.1.36</mysql.version>
         <druid.version>1.1.10</druid.version>
     </properties>
 
@@ -118,6 +119,13 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons_lang3_version}</version>
             </dependency>
+            
+            <!-- mysql -->
+			<dependency>
+			    <groupId>mysql</groupId>
+			    <artifactId>mysql-connector-java</artifactId>
+			    <version>${mysql.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
