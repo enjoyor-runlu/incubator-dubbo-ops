@@ -16,9 +16,9 @@ import com.alibaba.dubbo.common.logger.LoggerFactory;
  * @author Tempest
  * 
  */
-public final class JDBCUtil {
+public final class JdbcUtil {
 
-	private static final Logger logger = LoggerFactory.getLogger(JDBCUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(JdbcUtil.class);
 
 	private static DataSource dataSource;
 

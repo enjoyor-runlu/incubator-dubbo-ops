@@ -58,7 +58,7 @@ import com.alibaba.dubbo.common.utils.NetUtils;
 import com.alibaba.dubbo.monitor.MonitorService;
 import com.alibaba.dubbo.monitor.simple.common.CountUtils;
 import com.enjoyor.dubbo.monitor.simple.domain.DubboInvoke;
-import com.enjoyor.dubbo.monitor.simple.util.JDBCUtil;
+import com.enjoyor.dubbo.monitor.simple.util.JdbcUtil;
 
 /**
  * SimpleMonitorService
@@ -349,7 +349,7 @@ public class SimpleMonitorService implements MonitorService {
 					+ ","
 					+ dubboInvoke.getMaxConcurrent()
 					+ ",'U', NOW(), 'sys', NOW(), 'sys')";
-			JDBCUtil.executeUpdate(sql);
+			JdbcUtil.executeUpdate(sql);
 
 			// 写入文件
 			String day = new SimpleDateFormat("yyyyMMdd").format(now);
