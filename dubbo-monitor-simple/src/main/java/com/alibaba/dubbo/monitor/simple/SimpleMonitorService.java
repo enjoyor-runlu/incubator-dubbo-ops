@@ -87,7 +87,7 @@ public class SimpleMonitorService implements MonitorService {
 				while (running) {
 					try {
 						// write(); // write statistics
-						writeToDB();
+						writeTo();
 					} catch (Throwable t) {
 						logger.error("Unexpected error occur at write stat log, cause: " + t.getMessage(), t);
 						try {
@@ -259,11 +259,11 @@ public class SimpleMonitorService implements MonitorService {
 	}
 
 	/**
-	 * Dubbo调用信息数据写入DB
+	 * Dubbo调用信息数据写入
 	 * 
 	 * @throws Exception
 	 */
-	private void writeToDB() throws Exception {
+	private void writeTo() throws Exception {
 		URL statistics = queue.take();
 		if (POISON_PROTOCOL.equals(statistics.getProtocol())) {
 			return;
@@ -315,8 +315,9 @@ public class SimpleMonitorService implements MonitorService {
 				return;
 			}
 
+			// 写入数据库
 			String sql =
-				"INSERT INTO market_tb_dubbo_inoke (PROVIDER, CONSUMER, SERVICE, METHOD, TYPE, INVOKE_DATE, INVOKE_TIME, SUCCESS, FAILURE, ELAPSED, CONCURRENT, MAX_ELAPSED, MAX_CONCURRENT, STATE, CREATE_DATE,  CREATE_USER, MODIFY_DATE, MODIFY_USER)"
+				"INSERT INTO dubbo_tb_inoke (PROVIDER, CONSUMER, SERVICE, METHOD, TYPE, INVOKE_DATE, INVOKE_TIME, SUCCESS, FAILURE, ELAPSED, CONCURRENT, MAX_ELAPSED, MAX_CONCURRENT, STATE, CREATE_DATE,  CREATE_USER, MODIFY_DATE, MODIFY_USER)"
 					+ "VALUES ("
 					+ dubboInvoke.getProvider()
 					+ ","
@@ -345,6 +346,29 @@ public class SimpleMonitorService implements MonitorService {
 					+ dubboInvoke.getMaxConcurrent()
 					+ ",'U', NOW(), 'sys', NOW(), 'sys')";
 			JDBCUtil.executeUpdate(sql);
+
+			// 写入文件
+			String day = new SimpleDateFormat("yyyyMMdd").format(now);
+			SimpleDateFormat format = new SimpleDateFormat("HHmm");
+
+			for (String key : types) {
+				String filename =
+					statisticsDirectory + "/" + day + "/" + dubboInvoke.getService() + "/" + dubboInvoke.getMethod()
+						+ "/" + dubboInvoke.getConsumer() + "/" + dubboInvoke.getProvider() + "/"
+						+ dubboInvoke.getType() + "." + key;
+				File file = new File(filename);
+				File dir = file.getParentFile();
+				if (dir != null && !dir.exists()) {
+					dir.mkdirs();
+				}
+				FileWriter writer = new FileWriter(file, true);
+				try {
+					writer.write(format.format(now) + " " + statistics.getParameter(key, 0) + "\n");
+					writer.flush();
+				} finally {
+					writer.close();
+				}
+			}
 		} catch (Throwable t) {
 			logger.error(t.getMessage(), t);
 		}
