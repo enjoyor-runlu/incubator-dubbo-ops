@@ -323,7 +323,7 @@ public class SimpleMonitorService implements MonitorService {
 			// 写入数据库
 			String sql =
 				"INSERT INTO dubbo_tb_inoke (PROVIDER, CONSUMER, SERVICE, METHOD, TYPE, INVOKE_DATE, INVOKE_TIME, SUCCESS, FAILURE, ELAPSED, CONCURRENT, MAX_ELAPSED, MAX_CONCURRENT, STATE, CREATE_DATE,  CREATE_USER, MODIFY_DATE, MODIFY_USER)"
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, U, NOW(), sys, NOW(), sys)";
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'U', NOW(), 'sys', NOW(), 'sys')";
 
 			List<Object> list = new ArrayList<Object>();
 			list.add(dubboInvoke.getProvider());
