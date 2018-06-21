@@ -1,11 +1,13 @@
 package com.enjoyor.dubbo.monitor.simple.util;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
+import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 
@@ -35,34 +37,34 @@ public final class JDBCUtil {
 		password = (String) proobj.get("db.password");
 	}
 
+	public static DataSource getDataSource() {
+		DruidDataSource dataSource = new DruidDataSource();
+		dataSource.setDriverClassName(drvierName);
+		dataSource.setUrl(url);
+		dataSource.setUsername(userName);
+		dataSource.setPassword(password);
+
+		return dataSource;
+	}
+
 	public static void executeUpdate(String sql) {
-		// 加载数据库驱动
-		try {
-			Class.forName(drvierName);// JDBC通用接口和Oracle数据库驱动包关联
-		} catch (ClassNotFoundException e) {
-			logger.error(e.getMessage(), e);
-		}
+		DataSource dataSource = getDataSource();
 
 		// 创建数据库连接
 		Connection conn = null;
 		try {
-			conn = DriverManager.getConnection(url, userName, password);
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		try {
+			conn = dataSource.getConnection();
 			Statement stmt = conn.createStatement();// 返回的是一个数据库操作对象（网络通信的输入输出流）
 			stmt.executeUpdate(sql);// 执行数据库操作
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		// 关闭连接
-		try {
-			conn.close();
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
+		} catch (Exception e) {
+			logger.error(e);
+		} finally {
+			// 关闭连接
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				logger.error(e);
+			}
 		}
 	}
 }
