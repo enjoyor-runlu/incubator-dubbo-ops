@@ -47,7 +47,7 @@ public class SystemPageHandler implements PageHandler {
 
         row = new ArrayList<String>();
         row.add("Version");
-        row.add(Version.getVersion(SystemPageHandler.class, "2.0.0"));
+        row.add(Version.getVersion(SystemPageHandler.class, "2.0.1"));
         rows.add(row);
 
         row = new ArrayList<String>();
