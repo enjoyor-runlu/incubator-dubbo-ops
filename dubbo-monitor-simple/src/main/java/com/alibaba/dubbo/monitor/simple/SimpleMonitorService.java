@@ -87,12 +87,8 @@ public class SimpleMonitorService implements MonitorService {
 			public void run() {
 				while (running) {
 					try {
-						logger.error("run start");
-						System.out.println("run start");
 						// write(); // write statistics
 						writeTo();
-						logger.error("run end");
-						System.out.println("run end");
 					} catch (Throwable t) {
 						logger.error("Unexpected error occur at write stat log, cause: " + t.getMessage(), t);
 						try {
